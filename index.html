@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Receiving Check App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-card">
+      <div>
+        <p class="eyebrow">DC Receiving Criteria</p>
+        <h1>ตรวจสอบเกณฑ์การรับสินค้า</h1>
+        <p class="subtext">กรอกวันผลิต แล้วระบบจะคำนวณผล Yes/No ตามตรรกะเดียวกับ Column H ใน Excel</p>
+      </div>
+      <div id="databaseStatus" class="status-pill">กำลังโหลดฐานข้อมูล...</div>
+    </section>
+
+    <section class="form-card">
+      <div class="grid-form">
+        <label>
+          <span>วันผลิต <strong>*</strong></span>
+          <input id="productionDate" type="date" />
+        </label>
+
+        <label>
+          <span>วันที่ตรวจรับ / วันที่ปัจจุบัน</span>
+          <input id="currentDate" type="date" />
+        </label>
+
+        <label>
+          <span>ห้าง</span>
+          <select id="mallFilter">
+            <option value="">ทั้งหมด</option>
+          </select>
+        </label>
+
+        <label>
+          <span>สินค้า</span>
+          <select id="productFilter">
+            <option value="">ทั้งหมด</option>
+          </select>
+        </label>
+      </div>
+
+      <details class="upload-panel">
+        <summary>โหลดไฟล์ Excel อื่น / ใช้งานแบบ Local</summary>
+        <p>ถ้าเปิดไฟล์บนเครื่องแล้ว browser โหลด <code>data/database.xlsx</code> ไม่ได้ ให้เลือกไฟล์ Excel ที่นี่</p>
+        <input id="excelFile" type="file" accept=".xlsx,.xls" />
+      </details>
+    </section>
+
+    <section id="summary" class="summary-grid" aria-live="polite"></section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <div>
+          <h2>ผลการตรวจสอบ</h2>
+          <p id="resultCaption">กรุณากรอกวันผลิตเพื่อเริ่มคำนวณ</p>
+        </div>
+        <button id="downloadCsv" type="button" disabled>Download CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ห้าง</th>
+              <th>สินค้า</th>
+              <th>อายุสินค้า</th>
+              <th>วันผลิต</th>
+              <th>เกณฑ์รับสินค้า (วัน)</th>
+              <th>วันผลิต + 25%</th>
+              <th>วันที่ตรวจรับ</th>
+              <th>Column H</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody">
+            <tr><td colspan="8" class="empty-state">ยังไม่มีผลลัพธ์</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
